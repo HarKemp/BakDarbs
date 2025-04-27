@@ -1,0 +1,22 @@
+pipeline {
+    agent { label 'linux-agent' } 
+    triggers {
+        cron('0 2 * * 6') // 2 AM on Saturday
+    }
+    stages {
+        stage('Run Linux Update') {
+            steps {
+                echo "Executing update.sh (needs sudo)"
+                // Jenkins needs to be configured to allow passwordless sudo for this user,
+                // or run the agent as root (not recommended), 
+                // or handle credentials securely. Using sudo directly here might fail.
+                // For testing, ensure 'autouser' has passwordless sudo rights for apt commands.
+                sh 'chmod +x ./scripts/linux/update.sh && sudo ./scripts/linux/update.sh' 
+            }
+        }
+    }
+    post {
+        success { echo 'Linux Update Successful' }
+        failure { echo 'Linux Update Failed!' }
+    }
+}

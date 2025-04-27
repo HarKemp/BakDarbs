@@ -1,0 +1,19 @@
+pipeline {
+    agent { label 'linux-agent' } // Use your Linux agent label
+    triggers {
+        cron('0 2,14 * * *') // 2 AM and 2 PM daily
+    }
+    stages {
+        stage('Run Linux Backup') {
+            steps {
+                echo "Executing backup.sh"
+                // Execute script relative to workspace root
+                sh 'chmod +x ./scripts/linux/backup.sh && ./scripts/linux/backup.sh' 
+            }
+        }
+    }
+    post {
+        success { echo 'Linux Backup Successful' }
+        failure { echo 'Linux Backup Failed!' }
+    }
+}

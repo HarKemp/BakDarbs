@@ -1,0 +1,18 @@
+pipeline {
+    agent { label 'linux-agent' } 
+    triggers {
+        cron('30 0 * * *') // 00:30 daily
+    }
+    stages {
+        stage('Run Linux Cleanup') {
+            steps {
+                echo "Executing cleanup.sh"
+                sh 'chmod +x ./scripts/linux/cleanup.sh && ./scripts/linux/cleanup.sh' 
+            }
+        }
+    }
+    post {
+        success { echo 'Linux Cleanup Successful' }
+        failure { echo 'Linux Cleanup Failed!' }
+    }
+}

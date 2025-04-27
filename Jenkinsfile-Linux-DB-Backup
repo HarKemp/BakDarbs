@@ -1,0 +1,23 @@
+pipeline {
+    agent { label 'linux-agent' } 
+    triggers {
+        cron('0 1 * * *') // 1 AM daily
+    }
+    stages {
+        stage('Run Linux DB Backup') {
+            steps {
+                echo "Executing db_backup.sh (needs permissions)"
+                 // Jenkins needs to be configured to allow passwordless sudo for 'sudo -u postgres ...',
+                // or run the agent as postgres (not recommended), 
+                // or configure pg_hba.conf for trust/passwordless access for autouser,
+                // or handle credentials securely.
+                // For testing, ensure 'autouser' can run 'sudo -u postgres pg_dump'.
+               sh 'chmod +x ./scripts/linux/db_backup.sh && ./scripts/linux/db_backup.sh' 
+            }
+        }
+    }
+    post {
+        success { echo 'Linux DB Backup Successful' }
+        failure { echo 'Linux DB Backup Failed!' }
+    }
+}

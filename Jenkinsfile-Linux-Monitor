@@ -1,0 +1,18 @@
+pipeline {
+    agent { label 'linux-agent' } 
+    triggers {
+        cron('H * * * *') // Hourly (using H for Jenkins hash load balancing)
+    }
+    stages {
+        stage('Run Linux Monitor') {
+            steps {
+                echo "Executing monitor.sh"
+                sh 'chmod +x ./scripts/linux/monitor.sh && ./scripts/linux/monitor.sh' 
+            }
+        }
+    }
+    post {
+        success { echo 'Linux Monitor Run Successful' }
+        failure { echo 'Linux Monitor Run Failed!' }
+    }
+}
