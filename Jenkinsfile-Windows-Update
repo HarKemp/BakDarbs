@@ -5,7 +5,18 @@ pipeline {
         cron('0 2 * * 0') // 2 AM on Sunday
     }
     stages {
-        stage('Checkout Scripts') { steps { checkout scmGit(branches: [name: '*/main'], extensions: [cleanBeforeCheckout()], userRemoteConfigs: [[credentialsId: '89682f6d-56e2-4bdb-b7ff-f30f11a9aead', url: 'https://github.com/HarKemp/BakDarbs.git']]) }}
+        // CORRECTED Checkout Stage
+        stage('Checkout Scripts') {
+            steps {
+                // Optional: Clean workspace before checkout (Requires Workspace Cleanup plugin)
+                cleanWs() 
+        
+                // Perform the checkout using the standard 'git' step
+                git url: 'https://github.com/HarKemp/BakDarbs.git', // Your repo URL
+                    branch: 'main',                                // Your branch
+                    credentialsId: '89682f6d-56e2-4bdb-b7ff-f30f11a9aead' // Your credentials ID
+            }
+        }
         stage('Run Windows Update') {
             steps {
                 echo "Executing update.ps1 (needs PSWindowsUpdate module & Admin)"
