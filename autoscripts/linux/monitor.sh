@@ -1,6 +1,7 @@
 #!/bin/bash
 # Script to monitor system resources
-LOG_FILE="/var/log/system_health.log" 
+set -e
+LOG_FILE="/var/log/automation_logs/system_health.log" 
 mkdir -p "$(dirname "$LOG_FILE")"
 
 echo "----------------------------------------" >> "$LOG_FILE"
