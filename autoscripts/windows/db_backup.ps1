@@ -1,6 +1,6 @@
 # Script to back up PostgreSQL database
-$DBName = "testdb_win" # Use the Windows DB name
-$DBUser = "testuser_win" # Use the Windows DB user
+$DBName = "testdb" # Use the Windows DB name
+$DBUser = "testuser" # Use the Windows DB user
 $DBPass = "Lotidrosaparole#6" # <<< USE THE CORRECT PASSWORD
 $BackupDir = "C:\Backup"
 $TimeStamp = Get-Date -Format "yyyy-MM-dd_HHmmss"
