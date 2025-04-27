@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'linux-agent' } 
+    agent { label 'linux-agent-1' } 
     triggers {
         cron('30 0 * * *') // 00:30 daily
     }
@@ -7,7 +7,7 @@ pipeline {
         stage('Run Linux Cleanup') {
             steps {
                 echo "Executing cleanup.sh"
-                sh 'chmod +x ./scripts/linux/cleanup.sh && ./scripts/linux/cleanup.sh' 
+                sh 'chmod +x ./autoscripts/linux/cleanup.sh && ./autoscripts/linux/cleanup.sh' 
             }
         }
     }
