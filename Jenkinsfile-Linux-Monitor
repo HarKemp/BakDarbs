@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'linux-agent' } 
+    agent { label 'linux-agent-1' } 
     triggers {
         cron('H * * * *') // Hourly (using H for Jenkins hash load balancing)
     }
