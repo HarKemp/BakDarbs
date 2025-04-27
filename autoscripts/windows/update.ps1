@@ -21,7 +21,7 @@ Import-Module PSWindowsUpdate -Force -ErrorAction SilentlyContinue
 try {
     LogWrite "Checking for available updates using PSWindowsUpdate module..."
     # Log Verbose stream to the log file
-    Get-WUInstall -AcceptAll -Install -Verbose *>&1 | Out-File -Append -FilePath $LogFile -Encoding UTF8
+    Get-WUInstall -AcceptAll -Install -IgnoreReboot -Verbose *>&1 | Out-File -Append -FilePath $LogFile -Encoding UTF8
     LogWrite "Windows Update check/install process completed via PSWindowsUpdate."
 } catch {
      LogWrite "ERROR: Windows Update check/install failed: $($_.Exception.Message)"
