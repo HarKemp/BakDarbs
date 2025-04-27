@@ -11,7 +11,7 @@ pipeline {
                 // or run the agent as root (not recommended), 
                 // or handle credentials securely. Using sudo directly here might fail.
                 // For testing, ensure 'autouser' has passwordless sudo rights for apt commands.
-                sh 'chmod +x ./scripts/linux/update.sh && sudo ./scripts/linux/update.sh' 
+                sh 'chmod +x ./autoscripts/linux/update.sh && sudo ./autoscripts/linux/update.sh' 
             }
         }
     }
