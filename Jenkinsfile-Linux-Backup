@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'linux-agent' } // Use your Linux agent label
+    agent { label 'linux-agent-1' } // Use your Linux agent label
     triggers {
         cron('0 2,14 * * *') // 2 AM and 2 PM daily
     }

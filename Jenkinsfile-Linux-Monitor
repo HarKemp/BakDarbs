@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'linux-agent' } 
+    agent { label 'linux-agent-1' } 
     triggers {
         cron('H * * * *') // Hourly (using H for Jenkins hash load balancing)
     }
@@ -7,7 +7,7 @@ pipeline {
         stage('Run Linux Monitor') {
             steps {
                 echo "Executing monitor.sh"
-                sh 'chmod +x ./scripts/linux/monitor.sh && ./scripts/linux/monitor.sh' 
+                sh 'chmod +x ./autoscripts/linux/monitor.sh && ./autoscripts/linux/monitor.sh' 
             }
         }
     }
