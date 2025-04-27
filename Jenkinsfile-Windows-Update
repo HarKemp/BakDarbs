@@ -1,0 +1,20 @@
+pipeline {
+    agent { label 'windows-agent-1' } 
+    options { skipDefaultCheckout(true) }
+    triggers {
+        cron('0 2 * * 0') // 2 AM on Sunday
+    }
+    stages {
+        stage('Checkout Scripts') { steps { checkout scmGit(branches: [name: '*/main'], extensions: [cleanBeforeCheckout()], userRemoteConfigs: [[credentialsId: '89682f6d-56e2-4bdb-b7ff-f30f11a9aead', url: 'https://github.com/HarKemp/BakDarbs.git']]) }}
+        stage('Run Windows Update') {
+            steps {
+                echo "Executing update.ps1 (needs PSWindowsUpdate module & Admin)"
+                powershell '.\\autoscripts\\windows\\update.ps1' 
+            }
+        }
+    }
+    post {
+        success { echo 'Windows Update Successful' }
+        failure { echo 'Windows Update Failed!' }
+    }
+}

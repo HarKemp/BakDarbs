@@ -1,0 +1,20 @@
+pipeline {
+    agent { label 'windows-agent-1' } 
+    options { skipDefaultCheckout(true) }
+    triggers {
+        cron('45 0 * * *') // 00:45 daily
+    }
+    stages {
+        stage('Checkout Scripts') { steps { checkout scmGit(branches: [name: '*/main'], extensions: [cleanBeforeCheckout()], userRemoteConfigs: [[credentialsId: '89682f6d-56e2-4bdb-b7ff-f30f11a9aead', url: 'https://github.com/HarKemp/BakDarbs.git']]) }}
+        stage('Run Windows Cleanup') {
+            steps {
+                echo "Executing cleanup.ps1"
+                powershell '.\\autoscripts\\windows\\cleanup.ps1' 
+            }
+        }
+    }
+    post {
+        success { echo 'Windows Cleanup Successful' }
+        failure { echo 'Windows Cleanup Failed!' }
+    }
+}

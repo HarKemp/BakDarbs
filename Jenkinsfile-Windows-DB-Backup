@@ -1,0 +1,20 @@
+pipeline {
+    agent { label 'windows-agent-1' } 
+    options { skipDefaultCheckout(true) }
+    triggers {
+        cron('30 1 * * *') // 1:30 AM daily
+    }
+    stages {
+        stage('Checkout Scripts') { steps { checkout scmGit(branches: [name: '*/main'], extensions: [cleanBeforeCheckout()], userRemoteConfigs: [[credentialsId: '89682f6d-56e2-4bdb-b7ff-f30f11a9aead', url: 'https://github.com/HarKemp/BakDarbs.git']]) }}
+        stage('Run Windows DB Backup') {
+            steps {
+                echo "Executing db_backup.ps1"
+                powershell '.\\autoscripts\\windows\\db_backup.ps1' 
+            }
+        }
+    }
+    post {
+        success { echo 'Windows DB Backup Successful' }
+        failure { echo 'Windows DB Backup Failed!' }
+    }
+}
