@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'linux-agent' } 
+    agent { label 'linux-agent-1' } 
     triggers {
         cron('0 1 * * *') // 1 AM daily
     }
@@ -12,7 +12,7 @@ pipeline {
                 // or configure pg_hba.conf for trust/passwordless access for autouser,
                 // or handle credentials securely.
                 // For testing, ensure 'autouser' can run 'sudo -u postgres pg_dump'.
-               sh 'chmod +x ./scripts/linux/db_backup.sh && ./scripts/linux/db_backup.sh' 
+               sh 'chmod +x ./autoscripts/linux/db_backup.sh && ./autoscripts/linux/db_backup.sh' 
             }
         }
     }
