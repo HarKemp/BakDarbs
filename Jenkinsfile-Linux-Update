@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'linux-agent' } 
+    agent { label 'linux-agent-1' } 
     triggers {
         cron('0 2 * * 6') // 2 AM on Saturday
     }
