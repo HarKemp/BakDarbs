@@ -8,7 +8,7 @@ pipeline {
             steps {
                 echo "Executing backup.sh"
                 // Execute script relative to workspace root
-                sh 'chmod +x ./scripts/linux/backup.sh && ./scripts/linux/backup.sh' 
+                sh 'chmod +x ./autoscripts/linux/backup.sh && ./autoscripts/linux/backup.sh' 
             }
         }
     }
